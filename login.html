@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedControl Sênior - Entrar</title>
+  <meta name="description" content="Entre no MedControl Sênior como paciente idoso ou como cuidador/familiar para acompanhar medicamentos, horários e alertas de saúde com segurança.">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <script src="login.js"></script>
+</head>
+<body>
+  <!-- Ícones reutilizáveis (decorativos) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-email" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-cadeado" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-usuario" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  </svg>
+
+  <a class="pular-conteudo" href="#conteudo">Ir para o conteúdo principal</a>
+
+  <main id="conteudo" class="login-main">
+    <section class="login-card" aria-labelledby="titulo-login">
+      <header class="login-topo">
+        <span class="login-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>
+          </svg>
+        </span>
+        <h1 id="titulo-login">MedControl Sênior</h1>
+        <p>Conectando idosos, familiares e cuidadores com total segurança clínica</p>
+      </header>
+
+      <!-- "Entrar" envia o formulário para a Home (index.html) -->
+      <form class="login-form" action="index.html">
+        <fieldset class="perfil">
+          <legend>Selecione quem está acessando:</legend>
+          <div class="perfil-opcoes">
+            <label class="perfil-opcao">
+              <input type="radio" name="perfil" value="idoso" class="so-leitor" checked>
+              <span class="perfil-card"><span class="perfil-emoji" aria-hidden="true">👴</span>Idoso (Paciente)</span>
+            </label>
+            <label class="perfil-opcao">
+              <input type="radio" name="perfil" value="cuidador" class="so-leitor">
+              <span class="perfil-card"><span class="perfil-emoji" aria-hidden="true">👩‍⚕️</span>Cuidador / Familiar</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <div class="campo-caixa">
+            <svg class="icone" aria-hidden="true" focusable="false"><use href="#i-email"/></svg>
+            <input type="email" id="email" value="waldemar.souza@gmail.com" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <div class="campo-caixa">
+            <svg class="icone" aria-hidden="true" focusable="false"><use href="#i-cadeado"/></svg>
+            <input type="password" id="senha" value="senha1234" autocomplete="current-password" required>
+          </div>
+        </div>
+
+        <button type="submit" class="botao-entrar">Entrar no MedControl</button>
+
+        <p class="login-ou">Ou continue com</p>
+        <button type="button" class="botao-conta">
+          <svg class="icone" aria-hidden="true" focusable="false"><use href="#i-usuario"/></svg>
+          Conta Google
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <!-- RODAPÉ (copie este bloco no fim de todas as páginas) -->
+  <footer class="rodape">
+    <p>MedControl Sênior © 2026 • Cuidado Inteligente de Saúde Digital para Idosos • LGPD Compliance</p>
+  </footer>
+</body>
+</html>

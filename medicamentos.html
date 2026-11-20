@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedControl Sênior - Medicamentos</title>
+  <meta name="description" content="Cadastre e gerencie os medicamentos do idoso no MedControl Sênior: doses, horários de alarme, notas de uso e alertas de interação medicamentosa.">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <script src="medicamentos.js"></script>
+</head>
+<body>
+  <!-- Ícones reutilizáveis (decorativos) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-inicio" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-remedio" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
+    <symbol id="i-calendario" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+    <symbol id="i-historico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol>
+    <symbol id="i-pessoas" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-compartilhar" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98"/><path d="m15.41 6.51-6.82 3.98"/></symbol>
+    <symbol id="i-usuario" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-olho" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-sair" viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></symbol>
+    <symbol id="i-som" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+    <symbol id="i-mensagem" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-lixeira" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol>
+    <symbol id="i-mais" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+    <symbol id="i-faiscas" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  </svg>
+
+  <a class="pular-conteudo" href="#conteudo">Ir para o conteúdo principal</a>
+
+  <!-- CABEÇALHO + MENU -->
+  <header class="topo">
+    <div class="topo-interno">
+      <div class="marca">
+        <span class="marca-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>
+          </svg>
+        </span>
+        <div>
+          <h1>MedControl Sênior</h1>
+          <p class="marca-sub">Acesso Sênior (Paciente)</p>
+        </div>
+      </div>
+
+      <div class="topo-acoes">
+        <div class="paciente">
+          <span class="avatar" aria-hidden="true">WS</span>
+          <div>
+            <p class="paciente-nome">Waldemar de Souza</p>
+            <p class="paciente-idade">72 anos</p>
+          </div>
+        </div>
+        <button type="button" class="botao-letra">
+          <svg class="icone" aria-hidden="true" focusable="false"><use href="#i-olho"/></svg>
+          <span class="botao-letra-texto">Letra grande (Sênior)</span>
+        </button>
+        <a class="botao-sair" href="login.html">
+          <svg class="icone" aria-hidden="true" focusable="false"><use href="#i-sair"/></svg>
+          Sair
+        </a>
+      </div>
+    </div>
+
+    <!-- MENU DE NAVEGAÇÃO: horizontal no desktop, vertical no mobile -->
+    <nav class="menu" aria-labelledby="titulo-menu">
+      <h2 id="titulo-menu" class="menu-titulo">Navegabilidade</h2>
+      <ul>
+        <li><a href="index.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-inicio"/></svg>Início</a></li>
+        <li><a href="medicamentos.html" aria-current="page"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-remedio"/></svg>Medicamentos (4)</a></li>
+        <li><a href="calendario.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-calendario"/></svg>Calendário</a></li>
+        <li><a href="historico.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-historico"/></svg>Histórico</a></li>
+        <li><a href="cuidadores.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-pessoas"/></svg>Cuidadores</a></li>
+        <li><a href="relatorio.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-compartilhar"/></svg>Relatório Médico</a></li>
+        <li><a href="ficha.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-usuario"/></svg>Ficha do Paciente</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main id="conteudo">
+    <h2 class="so-leitor">Medicamentos</h2>
+
+    <!-- Assistente de voz -->
+    <section class="cartao assistente" aria-labelledby="titulo-voz">
+      <span class="assistente-icone" aria-hidden="true"><svg class="icone" focusable="false"><use href="#i-mensagem"/></svg></span>
+      <div class="assistente-texto">
+        <h3 id="titulo-voz"><span aria-hidden="true">🙂</span> Assistente de voz sênior</h3>
+        <p>Diga <q class="comando">Tomei</q> para marcar a medicação atual, ou peça para ver o histórico.</p>
+      </div>
+      <div class="assistente-botoes">
+        <button type="button" class="botao botao-azul"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>Falar</button>
+        <button type="button" class="botao botao-escuro"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg>Comandar</button>
+      </div>
+    </section>
+
+    <!-- Cabeçalho da seção -->
+    <section class="secao-topo" aria-labelledby="titulo-cadastro">
+      <div class="secao-texto">
+        <h2 id="titulo-cadastro"><span aria-hidden="true">💊</span> Cadastro de Medicamentos</h2>
+        <p>Adicione e gerencie seus medicamentos diretamente pelo paciente idoso ou pelo cuidador da família, com segurança e inteligência clínica.</p>
+      </div>
+      <div class="secao-botoes">
+        <button type="button" class="botao botao-azul botao-grande-texto"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-faiscas"/></svg>Análise IA interação medicamentos</button>
+        <button type="button" id="botao-adicionar" class="botao botao-preto botao-grande-texto" aria-controls="form-novo-med"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-mais"/></svg><span id="texto-adicionar">Adicionar Medicamento</span></button>
+      </div>
+    </section>
+
+    <!-- Formulário de cadastro (abre ao clicar em "Adicionar Medicamento") -->
+    <section id="form-novo-med" class="form-novo" aria-labelledby="titulo-novo" hidden>
+      <form id="form-medicamento">
+        <div class="form-topo">
+          <div>
+            <h3 id="titulo-novo"><span aria-hidden="true">📝</span> Novo Medicamento na Lista</h3>
+            <p>Preencha os dados do medicamento prescrito na receita médica</p>
+          </div>
+          <span class="selo-verde">Cadastro autônomo</span>
+        </div>
+
+        <fieldset class="quem">
+          <legend>Quem está realizando este cadastro? <span aria-hidden="true">*</span></legend>
+          <div class="quem-opcoes">
+            <label class="quem-opcao">
+              <input type="radio" name="quem" value="idoso" class="so-leitor" checked>
+              <span class="quem-card"><span aria-hidden="true">🙂</span> Próprio Paciente (Idoso)</span>
+            </label>
+            <label class="quem-opcao">
+              <input type="radio" name="quem" value="cuidador" class="so-leitor">
+              <span class="quem-card"><span aria-hidden="true">👩‍⚕️</span> Cuidador / Familiar Responsável</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-grid">
+          <div class="form-campo">
+            <label for="f-nome">Nome comercial do remédio <span aria-hidden="true">*</span></label>
+            <input type="text" id="f-nome" placeholder="Ex. Losartana, Tylenol, Diamicron" required>
+          </div>
+          <div class="form-campo">
+            <label for="f-ativo">Princípio ativo (substância química) <span aria-hidden="true">*</span></label>
+            <input type="text" id="f-ativo" placeholder="Ex. Paracetamol, Losartana potássica" required>
+          </div>
+
+          <div class="form-campo">
+            <label for="f-dose">Dosagem do comprimido ou frasco <span aria-hidden="true">*</span></label>
+            <input type="text" id="f-dose" placeholder="Ex. 50mg, 1 comprimido, 5ml, 10 gotas" required>
+          </div>
+          <div class="form-campo">
+            <label for="f-horarios">Horários programados (separados por vírgula) <span aria-hidden="true">*</span></label>
+            <input type="text" id="f-horarios" value="08:00, 20:00" required
+                   pattern="\s*([01]\d|2[0-3]):[0-5]\d(\s*,\s*([01]\d|2[0-3]):[0-5]\d)*\s*"
+                   title="Use o formato 08:00, 20:00 (horas com dois dígitos, separadas por vírgula)">
+          </div>
+
+          <div class="form-campo">
+            <label for="f-freq">Como deve ser a frequência?</label>
+            <select id="f-freq">
+              <option value="diario" selected>Todo santo dia (Diário)</option>
+              <option value="alternados">Dia sim, dia não</option>
+              <option value="semanal">Uma vez por semana</option>
+              <option value="necessario">Somente se necessário (febre ou dor)</option>
+            </select>
+          </div>
+          <div class="form-campo">
+            <label for="f-medico">Médico da receita (opcional - apenas informativo)</label>
+            <input type="text" id="f-medico" placeholder="Ex. Dr. Carlos (anotar médico da receita)">
+            <select id="f-contato" class="secundario" aria-label="Ou selecione dos seus contatos médicos salvos">
+              <option value="">Ou selecione dos seus contatos médicos salvos...</option>
+              <option>Dr. Carlos Eduardo Menezes</option>
+              <option>Dra. Eliana Fernandes</option>
+            </select>
+          </div>
+
+          <div class="form-campo">
+            <label for="f-inicio">Data de início</label>
+            <input type="date" id="f-inicio" value="2026-06-06">
+          </div>
+          <div class="form-campo">
+            <label for="f-termino">Data de término</label>
+            <input type="date" id="f-termino" value="2026-12-31">
+          </div>
+
+          <div class="form-campo form-largo">
+            <label for="f-obs">Recomendações e observações de uso</label>
+            <textarea id="f-obs" rows="3" placeholder="Ex. Tomar sempre com estômago cheio para evitar queimação, ou cortar comprimido ao meio..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-rodape">
+          <button type="button" id="botao-cancelar" class="botao-cancelar">Cancelar</button>
+          <button type="submit" class="botao-cadastrar"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Cadastrar Medicamento</button>
+        </div>
+      </form>
+    </section>
+
+    <p id="aviso-cadastro" class="aviso-ok" role="status" hidden></p>
+
+    <!-- Lista de medicamentos -->
+    <section aria-labelledby="titulo-lista">
+      <h3 id="titulo-lista" class="so-leitor">Medicamentos cadastrados (4)</h3>
+      <ul class="med-lista">
+      <li>
+      <article class="med-card" aria-labelledby="med-losartana">
+        <div class="med-topo">
+          <span class="med-icone" aria-hidden="true"><svg class="icone" focusable="false"><use href="#i-remedio"/></svg></span>
+          <div class="med-titulo">
+            <h3 id="med-losartana">Losartana Potássica</h3>
+            <p class="med-ativo">Ativo: Losartana</p>
+            <p class="med-selos">
+              <span class="selo selo-quem"><span aria-hidden="true">🙂</span> Cadastrado pelo Idoso</span>
+            </p>
+          </div>
+          <button type="button" class="botao-lixeira" aria-label="Excluir Losartana Potássica"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-lixeira"/></svg></button>
+        </div>
+        <dl class="med-dados">
+          <div><dt class="rotulo">Frequência</dt><dd>Diário</dd></div>
+          <div><dt class="rotulo">Dose prescrita</dt><dd>50mg</dd></div>
+        </dl>
+        <div class="med-bloco">
+          <h4 class="rotulo">Horários do alarme</h4>
+          <ul class="horarios"><li><time datetime="08:00">08:00</time></li><li><time datetime="20:00">20:00</time></li></ul>
+        </div>
+        <p class="faixa"><span aria-hidden="true">ℹ️</span> <strong>Notas de uso:</strong> Tomar em jejum pela manhã e com água morna à noite. Controla pressão alta.</p>
+      </article>
+      </li>
+      <li>
+      <article class="med-card med-card-alerta" aria-labelledby="med-varfarina">
+        <div class="med-topo">
+          <span class="med-icone" aria-hidden="true"><svg class="icone" focusable="false"><use href="#i-remedio"/></svg></span>
+          <div class="med-titulo">
+            <h3 id="med-varfarina">Varfarina Sódica</h3>
+            <p class="med-ativo">Ativo: Varfarina</p>
+            <p class="med-selos">
+              <span class="selo selo-quem"><span aria-hidden="true">👩</span> Cadastrado pelo Cuidador</span>
+            </p>
+          </div>
+          <button type="button" class="botao-lixeira" aria-label="Excluir Varfarina Sódica"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-lixeira"/></svg></button>
+        </div>
+        <p class="med-alerta"><span aria-hidden="true">⚠️ ⛔</span> Interação grave: Varfarina Sódica + Aspirina Prevent</p>
+        <dl class="med-dados">
+          <div><dt class="rotulo">Frequência</dt><dd>Diário</dd></div>
+          <div><dt class="rotulo">Dose prescrita</dt><dd>5mg</dd></div>
+        </dl>
+        <div class="med-bloco">
+          <h4 class="rotulo">Horários do alarme</h4>
+          <ul class="horarios"><li><time datetime="14:00">14:00</time></li></ul>
+        </div>
+        <p class="faixa"><span aria-hidden="true">ℹ️</span> <strong>Notas de uso:</strong> Anticoagulante importante. Fazer exame RNI mensalmente.</p>
+      </article>
+      </li>
+      <li>
+      <article class="med-card med-card-alerta" aria-labelledby="med-aspirina">
+        <div class="med-topo">
+          <span class="med-icone" aria-hidden="true"><svg class="icone" focusable="false"><use href="#i-remedio"/></svg></span>
+          <div class="med-titulo">
+            <h3 id="med-aspirina">Aspirina Prevent</h3>
+            <p class="med-ativo">Ativo: Aspirina</p>
+            <p class="med-selos">
+              <span class="selo selo-quem"><span aria-hidden="true">👩</span> Cadastrado pelo Cuidador</span>
+            </p>
+          </div>
+          <button type="button" class="botao-lixeira" aria-label="Excluir Aspirina Prevent"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-lixeira"/></svg></button>
+        </div>
+        <p class="med-alerta"><span aria-hidden="true">⚠️ ⛔</span> Interação grave: Varfarina Sódica + Aspirina Prevent</p>
+        <dl class="med-dados">
+          <div><dt class="rotulo">Frequência</dt><dd>Diário</dd></div>
+          <div><dt class="rotulo">Dose prescrita</dt><dd>100mg</dd></div>
+        </dl>
+        <div class="med-bloco">
+          <h4 class="rotulo">Horários do alarme</h4>
+          <ul class="horarios"><li><time datetime="14:00">14:00</time></li></ul>
+        </div>
+        <p class="faixa"><span aria-hidden="true">ℹ️</span> <strong>Notas de uso:</strong> Protetor cardíaco básico. Tomar após o almoço.</p>
+      </article>
+      </li>
+      <li>
+      <article class="med-card" aria-labelledby="med-tylenol">
+        <div class="med-topo">
+          <span class="med-icone" aria-hidden="true"><svg class="icone" focusable="false"><use href="#i-remedio"/></svg></span>
+          <div class="med-titulo">
+            <h3 id="med-tylenol">Tylenol Sinus</h3>
+            <p class="med-ativo">Ativo: Paracetamol</p>
+            <p class="med-selos">
+              <span class="selo selo-quem"><span aria-hidden="true">🙂</span> Cadastrado pelo Idoso</span>
+            </p>
+          </div>
+          <button type="button" class="botao-lixeira" aria-label="Excluir Tylenol Sinus"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-lixeira"/></svg></button>
+        </div>
+        <dl class="med-dados">
+          <div><dt class="rotulo">Frequência</dt><dd>Se necessário (Febre ou Dor)</dd></div>
+          <div><dt class="rotulo">Dose prescrita</dt><dd>500mg</dd></div>
+        </dl>
+        <div class="med-bloco">
+          <h4 class="rotulo">Horários do alarme</h4>
+          <ul class="horarios"><li><time datetime="09:00">09:00</time></li><li><time datetime="15:00">15:00</time></li><li><time datetime="21:00">21:00</time></li></ul>
+        </div>
+        <p class="faixa"><span aria-hidden="true">ℹ️</span> <strong>Notas de uso:</strong> Para alívio de dor articular.</p>
+      </article>
+      </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- RODAPÉ (copie este bloco no fim de todas as páginas) -->
+  <footer class="rodape">
+    <p>MedControl Sênior © 2026 • Cuidado Inteligente de Saúde Digital para Idosos • LGPD Compliance</p>
+  </footer>
+</body>
+</html>

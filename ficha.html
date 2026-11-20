@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedControl Sênior - Ficha do Paciente</title>
+  <meta name="description" content="Ficha médica do idoso no MedControl Sênior: consulte e atualize nome, data de nascimento, sexo, tipo sanguíneo, peso, altura, telefone e e-mail para uso em reações ou intercorrências.">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <script src="ficha.js"></script>
+</head>
+<body>
+  <!-- Ícones reutilizáveis (decorativos) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-inicio" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-remedio" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
+    <symbol id="i-calendario" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+    <symbol id="i-historico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol>
+    <symbol id="i-pessoas" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-compartilhar" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98"/><path d="m15.41 6.51-6.82 3.98"/></symbol>
+    <symbol id="i-usuario" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-olho" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-sair" viewBox="0 0 24 24"><path d="M12 2v10"/><path d="M18.4 6.6a9 9 0 1 1-12.77.04"/></symbol>
+    <symbol id="i-som" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+    <symbol id="i-mensagem" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-lixeira" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></symbol>
+    <symbol id="i-mais" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+    <symbol id="i-faiscas" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></symbol>
+    <symbol id="i-imprimir" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></symbol>
+    <symbol id="i-copiar" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-documento" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></symbol>
+    <symbol id="i-telefone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  </svg>
+
+  <a class="pular-conteudo" href="#conteudo">Ir para o conteúdo principal</a>
+
+  <!-- CABEÇALHO + MENU -->
+  <header class="topo">
+    <div class="topo-interno">
+      <div class="marca">
+        <span class="marca-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>
+          </svg>
+        </span>
+        <div>
+          <h1>MedControl Sênior</h1>
+          <p class="marca-sub">Acesso Sênior (Paciente)</p>
+        </div>
+      </div>
+
+      <div class="topo-acoes">
+        <div class="paciente">
+          <span class="avatar" aria-hidden="true">WS</span>
+          <div>
+            <p class="paciente-nome">Waldemar de Souza</p>
+            <p class="paciente-idade">72 anos</p>
+          </div>
+        </div>
+        <button type="button" class="botao-letra">
+          <svg class="icone" aria-hidden="true" focusable="false"><use href="#i-olho"/></svg>
+          <span class="botao-letra-texto">Letra grande (Sênior)</span>
+        </button>
+        <a class="botao-sair" href="login.html">
+          <svg class="icone" aria-hidden="true" focusable="false"><use href="#i-sair"/></svg>
+          Sair
+        </a>
+      </div>
+    </div>
+
+    <!-- MENU DE NAVEGAÇÃO: horizontal no desktop, vertical no mobile -->
+    <nav class="menu" aria-labelledby="titulo-menu">
+      <h2 id="titulo-menu" class="menu-titulo">Navegabilidade</h2>
+      <ul>
+        <li><a href="index.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-inicio"/></svg>Início</a></li>
+        <li><a href="medicamentos.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-remedio"/></svg>Medicamentos (4)</a></li>
+        <li><a href="calendario.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-calendario"/></svg>Calendário</a></li>
+        <li><a href="historico.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-historico"/></svg>Histórico</a></li>
+        <li><a href="cuidadores.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-pessoas"/></svg>Cuidadores</a></li>
+        <li><a href="relatorio.html"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-compartilhar"/></svg>Relatório Médico</a></li>
+        <li><a href="ficha.html" aria-current="page"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-usuario"/></svg>Ficha do Paciente</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main id="conteudo">
+    <h2 class="so-leitor">Ficha do paciente</h2>
+
+    <!-- Assistente de voz -->
+    <section class="cartao assistente" aria-labelledby="titulo-voz">
+      <span class="assistente-icone" aria-hidden="true"><svg class="icone" focusable="false"><use href="#i-mensagem"/></svg></span>
+      <div class="assistente-texto">
+        <h3 id="titulo-voz"><span aria-hidden="true">🙂</span> Assistente de voz sênior</h3>
+        <p>Diga <q class="comando">Tomei</q> para marcar a medicação atual, ou peça para ver o histórico.</p>
+      </div>
+      <div class="assistente-botoes">
+        <button type="button" class="botao botao-azul"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-som"/></svg>Falar</button>
+        <button type="button" class="botao botao-escuro"><svg class="icone" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg>Comandar</button>
+      </div>
+    </section>
+
+    <section class="ficha" aria-labelledby="titulo-ficha">
+      <h2 id="titulo-ficha"><span aria-hidden="true">👤</span> Ficha Médica do Idoso</h2>
+      <p class="ficha-sub">Dados pessoais fundamentais em caso de reações ou intercorrências.</p>
+
+      <p id="aviso-ficha" class="aviso-ok" role="status" hidden></p>
+
+      <form id="form-ficha" class="ficha-form" action="#">
+        <div class="campos campos-2">
+          <div class="campo">
+            <label for="f-nome">Nome Completo</label>
+            <input type="text" id="f-nome" name="nome" value="Waldemar de Souza" autocomplete="name" required>
+          </div>
+          <div class="campo">
+            <label for="f-nasc">Data de Nascimento</label>
+            <input type="date" id="f-nasc" name="nascimento" value="1954-04-12" max="2026-12-31" required>
+          </div>
+          <div class="campo">
+            <label for="f-sexo">Sexo</label>
+            <select id="f-sexo" name="sexo">
+              <option selected>Masculino</option>
+              <option>Feminino</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-sangue">Tipo Sanguíneo</label>
+            <select id="f-sangue" name="sangue">
+              <option>A+</option><option>A-</option>
+              <option>B+</option><option>B-</option>
+              <option>AB+</option><option>AB-</option>
+              <option selected>O+</option><option>O-</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-peso">Peso (kg)</label>
+            <input type="number" id="f-peso" name="peso" value="78" min="20" max="300" step="0.1" inputmode="decimal" required>
+          </div>
+          <div class="campo">
+            <label for="f-altura">Altura (cm)</label>
+            <input type="number" id="f-altura" name="altura" value="172" min="80" max="250" step="1" inputmode="numeric" required>
+          </div>
+          <div class="campo">
+            <label for="f-tel">Telefone Principal</label>
+            <input type="tel" id="f-tel" name="telefone" value="(11) 98765-4321" autocomplete="tel" required>
+          </div>
+          <div class="campo">
+            <label for="f-email">E-mail Cadastrado</label>
+            <input type="email" id="f-email" name="email" value="waldemar.souza@gmail.com" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="form-acoes">
+          <button type="submit" class="botao-salvar botao-atualizar">Atualizar Informações</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- RODAPÉ (copie este bloco no fim de todas as páginas) -->
+  <footer class="rodape">
+    <p>MedControl Sênior © 2026 • Cuidado Inteligente de Saúde Digital para Idosos • LGPD Compliance</p>
+  </footer>
+</body>
+</html>
